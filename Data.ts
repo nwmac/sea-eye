@@ -1,6 +1,7 @@
 import { Travis } from "./Travis";
 import { TouchableWithoutFeedbackBase } from "react-native";
 import { Jenkins } from "./Jenkins";
+import Config from "./Config";
 
 export type BuildStatus = 'unknown' | 'passed' | 'failed' | 'canceled' | 'started' | 'created';
 
@@ -27,14 +28,8 @@ export default class Data {
     this.travis = new Travis();
     this.jenkins = new Jenkins();
 
-    // Manually configure the jobs you want here
-    this.jobs.push({
-      type: 'travis',
-      webView: 'https://travis-ci.org',
-      url: 'https://api.travis-ci.org',
-      repo: 'REPO',
-      apiKey: 'token TOKEN',
-    });
+    const config = new Config();
+    this.jobs = config.getJobs();
   }
 
   fetch() {
@@ -48,11 +43,9 @@ export default class Data {
     });
 
     return Promise.all(promises).then(data => {
-      console.log('All data fetched');
       let combined = [] as any[];
       data.forEach(d => combined = combined.concat(d));
       combined = combined.filter(branch => branch.exists_on_github);
-      console.log(combined);
       return combined;
     });
   }

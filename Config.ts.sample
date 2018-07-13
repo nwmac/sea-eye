@@ -1,0 +1,24 @@
+// Copy this file to Config.ts and modify as needed
+
+import { Job } from "./Data";
+
+export default class Config {
+
+  public getJobs(): Job[] {
+    const jobs = [] as Job[];
+
+    // Manually configure the jobs you want here
+
+    jobs.push({
+      type: 'travis',
+      webView: 'https://travis-ci.org',
+      url: 'https://api.travis-ci.org',
+      repo: 'REPO',
+      apiKey: 'token TOKEN',
+    });
+
+    return jobs;
+  }
+
+
+}
