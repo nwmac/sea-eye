@@ -39,28 +39,13 @@ export default class JenkinsJobDetail extends React.Component<any, any> {
     const { navigation } = this.props;
     const branch = navigation.getParam('branch', {});
     const {id} = branch.last_build;
-    console.log('Jenkins Job Detail');
-    console.log(branch);
-    console.log(id);
-    // return Data.store.fetchBuild(this.props.branch.job, id).then(data => {
-    //   this.setState({ data: data });
-    // })
-    // .catch(e => {
-    //   console.log(e);
-    // });
-  }
-
-  showJenkinsDetail() {
-    console.log('SHOW JENKINS DETAIL');
   }
 
   render() {
     const { navigation } = this.props;
     const branch = navigation.getParam('branch', {});
-
     const { name, repo } = branch;
     const build = branch.last_build || {};
-    console.log(build);
     let message = build.commit && build.commit.message ? build.commit.message : '';
     message = message.split('\n')[0];
     const since = moment(build.started_at).fromNow();
@@ -86,16 +71,3 @@ export default class JenkinsJobDetail extends React.Component<any, any> {
     )
   };
 }
-
-/*
-            <Icon name="chevron-right" size={24} color="#777"/>
-
-        <TouchableOpacity style={{
-          borderBottomColor: '#ccc',
-          borderBottomWidth: 1,
-          padding: 16
-        }} onPress={this.showJenkinsDetail.bind(this)}>
-          </TouchableOpacity>
-          </TouchableOpacity>
-
-*/

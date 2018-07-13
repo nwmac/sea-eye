@@ -12,22 +12,12 @@ export interface OverviewState {
   init: boolean;
   selectedTab: string;
 }
-/*
-https://github.com/jondot/awesome-react-native
-https://medium.com/@ste.grider/component-kits-for-react-native-84eff4b321b9
-https://react.parts/
-https://react.parts/
-*/
 export class Overview extends React.Component<any, OverviewState> {
 
   private travis = new Travis();
 
   static navigationOptions = ({ navigation, navigationOptions }) => {
     const { params } = navigation.state;
-
-    console.log('HERE - OPTIONS');
-    console.log(params)
-
     return {
       title: 'Sea Eye',
     };

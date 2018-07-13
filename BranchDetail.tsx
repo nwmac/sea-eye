@@ -1,6 +1,5 @@
 import React from 'react';
-import { AlertIOS, Button, FlatList, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { Card, ListItem } from 'react-native-elements'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/Octicons';
 import Data from './Data';
@@ -12,10 +11,7 @@ export default class BranchDetail extends React.Component<any, any> {
     container: {
       flex: 1,
       backgroundColor: '#fff',
-      //alignItems: 'center',
-      //justifyContent: 'center',
     },
-
   });
 
   static navigationOptions = ({ navigation, navigationOptions }) => {
@@ -35,27 +31,12 @@ export default class BranchDetail extends React.Component<any, any> {
       refreshing: false
     };
     this.fetchData();
-
-    //const navigator = this.props.navigator;
-    // navigator.setButtons({
-    //   rightButtons: [
-    //     {
-    //       icon: require('./assets/images/refresh.png'),
-    //       id: 'refresh'
-    //     }
-    //   ]
-    // });
-
-    //navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
 
   fetchData() {
-    console.log('Fetch Data');
     const { navigation } = this.props;
     const branch = navigation.getParam('branch', {});
     const id = !!branch && branch.last_build ? branch.last_build.id : '';
-    console.log(branch);
-    console.log(id);
     return Data.store.fetchBuild(branch.job, id).then(data => {
       this.setState({ data: data });
     })
@@ -65,10 +46,7 @@ export default class BranchDetail extends React.Component<any, any> {
   }
 
   showTravisDetail(navigation, branch) {
-    console.log('SHOW TRAVIS DETAIL');
-    console.log(branch);
     const url = branch.job.webView + '/' + branch.repo + '/builds/' + branch.last_build.id;
-    console.log(url);
     navigation.navigate('UrlView', {
       title: 'Travis Build: #' + branch.last_build.number,
       url: url
@@ -76,13 +54,10 @@ export default class BranchDetail extends React.Component<any, any> {
   }
 
   render() {
-    console.log('HERE');
     const { navigation } = this.props;
     const branch = navigation.getParam('branch', {});
-    console.log(branch);
     const { name, repo } = branch;
     const build = this.state.data || {};
-    console.log(build);
     let message = build.commit && build.commit.message ? build.commit.message : '';
     message = message.split('\n')[0];
     const since = moment(build.started_at).fromNow();

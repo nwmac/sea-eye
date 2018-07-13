@@ -28,43 +28,7 @@ export default class JenkinsBuildInfo extends React.Component<BranchProps, any> 
       paddingLeft: 4,
     }
   });
-
-  branchColor(build) {
-    const { state } = build;
-    switch (state) {
-      case 'canceled':
-        return '#777';
-      case 'failed':
-        return 'red'
-      case 'passed':
-        return 'green';
-      case 'started':
-        return '#2960c6';
-      case 'created':
-        return '#2960c6';
-      default:
-        return '#777';
-    }
-  }
-
-  branchIcon(build) {
-    const { state } = build;
-    switch (state) {
-      case 'canceled':
-        return 'do-not-disturb-on';
-      case 'failed':
-        return 'cancel'
-      case 'passed':
-        return 'check-circle';
-      case 'created':
-        return 'pause-circle-filled';
-      case 'started':
-        return 'play-circle-filled';
-      default:
-        return 'help';
-    }
-  }
-
+  
   render() {
     const build = this.props.build;
     const name = build.fullDisplayName;

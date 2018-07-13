@@ -43,44 +43,7 @@ export default class JenkinsBuilds extends React.Component<any, any> {
     }
   });
 
-  branchColor(build) {
-    const { state } = build;
-    switch (state) {
-      case 'canceled':
-        return '#777';
-      case 'failed':
-        return 'red'
-      case 'passed':
-        return 'green';
-      case 'started':
-        return '#2960c6';
-      case 'created':
-        return '#2960c6';
-      default:
-        return '#777';
-    }
-  }
-
-  branchIcon(build) {
-    const { state } = build;
-    switch (state) {
-      case 'canceled':
-        return 'do-not-disturb-on';
-      case 'failed':
-        return 'cancel'
-      case 'passed':
-        return 'check-circle';
-      case 'created':
-        return 'pause-circle-filled';
-      case 'started':
-        return 'play-circle-filled';
-      default:
-        return 'help';
-    }
-  }
   render() {
-    console.log('Jenkins Builds');
-    console.log(this.props.job);
     let builds = this.props.job.jenkins.builds || [];
     // Restict to last 10 builds
     builds = builds.slice(1, 10);

@@ -11,7 +11,6 @@ export class Jenkins {
           jenkins: item,
           exists_on_github: true,
           name: item.fullDisplayName,
-          //noMoreDetail: true,
           last_build: {
             previous_state: 'passed',
             state: this.getState(item),

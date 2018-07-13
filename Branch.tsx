@@ -1,10 +1,8 @@
 import React from 'react';
 import { AlertIOS, Button, FlatList, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { Card, ListItem } from 'react-native-elements'
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import BranchDetail from './BranchDetail';
-import JenkinsJobDetail from './JenkinsJobDetail';
+import Data from './Data';
 
 export interface BranchData {
   key: string;
@@ -42,92 +40,25 @@ export default class Branch extends React.Component<BranchProps, any> {
     }
   });
 
-  branchColor(build) {
-    const { state } = build;
-    switch (state) {
-      case 'canceled':
-        return '#777';
-      case 'failed':
-        return 'red'
-      case 'passed':
-        return 'green';
-      case 'started':
-        return '#2960c6';
-      case 'created':
-        return '#2960c6';
-      default:
-        return '#777';
-    }
-  }
-
-  branchIcon(build) {
-    const { state } = build;
-    switch (state) {
-      case 'canceled':
-        return 'do-not-disturb-on';
-      case 'failed':
-        return 'cancel'
-      case 'passed':
-        return 'check-circle';
-      case 'created':
-        return 'pause-circle-filled';
-      case 'started':
-        return 'play-circle-filled';
-      default:
-        return 'help';
-    }
-  }
-
-  indicatorIcon(build) {
-    const { state, previous_state } = build;
-    let icon = 'sentiment-neutral';
-    if (state === 'failed') {
-      if (previous_state === 'passed') {
-        icon = 'sentiment-dissatisfied';
-      }
-    } else if (state == 'passed') {
-      if (previous_state === 'failed') {
-        icon = 'sentiment-very-satisfied';
-      } else {
-        icon = 'sentiment-satisfied';
-      }
-    }
-    return icon;
-  }
-
   showBranchDetail = (branch: any) => {
-    console.log('showBranchDetail ');
-    console.log(branch);
-
     this.props.navigation.navigate(
       branch.job.type === 'travis' ? 'TravisDetail' : 'JenkinsDetail',
       {
         branch: branch
       }
     );
-
-    // this.props.navigator.push({
-    //   component: branch.job.type === 'travis' ? BranchDetail : JenkinsJobDetail,
-    //   title: branch.name,
-    //   passProps: {
-    //     branch: branch
-    //   }
-    // });
   }
 
   render() {
-    console.log('render');
     let { name, last_build, repo } = this.props.branch;
     last_build = last_build || {};
     var age = last_build.finished_at ? moment(last_build.finished_at).fromNow() : 'now';
-    const color = this.branchColor(last_build)
-    const icon = this.branchIcon(last_build)
+    const color = Data.getBranchColor(last_build.state);
+    const icon = Data.getBranchColor(last_build.state)
     let status = last_build.state || '';
     status = status.toUpperCase();
-    const indicator = this.indicatorIcon(last_build);
     const canDrillDown = !this.props.branch.noMoreDetail;
     const styles = this.styles;
-
     function cardInfo() {
       return (
           <View style={{
